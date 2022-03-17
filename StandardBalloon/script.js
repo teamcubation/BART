@@ -11,9 +11,9 @@ $(document).ready(function() {
     var size; // start_size incremented by 'increase'
     var pumps; 
     var total = 0; // money that has been earned in total
-    var rounds_played = 30;
-    var explode_array =  [31, 80,  63, 103, 20,  26, 100,  75, 109,  72,  88,  77, 113, 22,  83,  86,  57,  14, 9,  90,  56,  41,  56,  27, 108,  42, 116,  18,  43,  95];
-    var maximal_pumps = 128;
+    var rounds_played = 10;
+    var explode_array =  [31, 80,  63, 103, 20,  26, 100,  75, 109,  72];
+    var maximal_pumps = 10;
     var pumpmeup; // number pumps in a given round; is updated each round
     var number_pumps = []; // arrays for saving number of pumps
     var exploded = []; // array for saving whether ballon has exploded
@@ -21,24 +21,24 @@ $(document).ready(function() {
     var last_win = 0; // initialize variable that contains the win of the previous round
     
     // initialize language
-    var label_press = 'Ballon aufpumpen';
-    var label_collect = '$$$ einsammeln';
-    var label_balance = 'Gesamtguthaben:';
-    var label_last = 'Gewinn letzte Runde:';
-    var label_currency = ' Taler';
-    var label_header = 'Ballon-Spiel Runde ';
-    var label_gonext1 = 'Nächste Runde starten';
-    var label_gonext2 = 'Spiel beenden';
-    var msg_explosion1 = '<p>Der Ballon ist in dieser Runde nach dem ';
-    var msg_explosion2 = '. Mal Aufpumpen geplatzt. <p>Sie haben in dieser Runde kein Geld verdient.</p>';
+    var label_press = 'Inflar globo';
+    var label_collect = '$$$ recolectar';
+    var label_balance = 'Balance total:';
+    var label_last = 'Ganó la última ronda:';
+    var label_currency = ' pesos';
+    var label_header = 'Ronda ';
+    var label_gonext1 = 'Empezar la siguiente ronda';
+    var label_gonext2 = 'Salir del juego';
+    var msg_explosion1 = '<p>El globo estalló después del ';
+    var msg_explosion2 = '. La bomba estalló una vez. <p>No ganaste nada de dinero esta ronda.</p>';
     
-    var msg_collect1 = '<p>Der Ballon ist nicht geplatzt!</p><p>Sie verdienen diese Runde ';
-    var msg_collect2 = ' Taler.</p><p> Das erspielte Geld ist sicher in der Bank.</p>';
+    var msg_collect1 = '<p>¡El globo no reventó!</p><p> Ganaste en esta ronda ';
+    var msg_collect2 = ' Pesos.</p><p> El dinero ganado está asegurado.</p>';
     
-    var msg_end1 = '<p>Damit ist dieser Teil der Studie abgeschlossen. Sie haben im Ballon-Spiel ';
-    var msg_end2 = ' Taler Gewinn gemacht. </p><p>Klicken Sie auf <i>Weiter</i>, um mit der Studie fortzufahren.</p>';
+    var msg_end1 = '<p>Esto completa el estudio.';
+    var msg_end2 = ' pesos es el beneficio obtenido </p><p> Haga click en <i>más</i>, para continuar con el estudio.</p>';
     
-    var err_msg = 'Sie können erst Geld einsammeln, sobald Sie den Ballon mindestens einmal aufgepumpt haben. Betätigen Sie dazu den Button "Ballon aufpumpen."';
+    var err_msg = 'Solo puedes cobrar dinero una vez que hayas inflado el globo al menos una vez. Para hacer esto, presione el botón "Inflar globo".';
   
   
     // initialize labels

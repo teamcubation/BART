@@ -1,44 +1,48 @@
 // standard version of the BART
+let generateRandomInteger = function(max) {
+    return Math.floor(Math.random() * max) + 1;
+}
 
 $(document).ready(function() { 
 
-    var saveThis = 'hidden'; // text fields that saves data should not be shown; can be shown in testing
+    let saveThis = 'hidden'; // text fields that saves data should not be shown; can be shown in testing
   
     // initialize values
-    var round = 0;
-    var start_size = 150; // start value of widht & height of the image; must correspond to the value that is specified for the #ballon id in style.css
-    var increase = 2; // number of pixels by which balloon is increased each pump
-    var size; // start_size incremented by 'increase'
-    var pumps; 
-    var total = 0; // money that has been earned in total
-    var rounds_played = 10;
-    var explode_array =  [31, 80,  63, 103, 20,  26, 100,  75, 109,  72];
-    var maximal_pumps = 10;
-    var pumpmeup; // number pumps in a given round; is updated each round
-    var number_pumps = []; // arrays for saving number of pumps
-    var exploded = []; // array for saving whether ballon has exploded
-    var explosion; // will an explosion occur? 1 = yes, 0 = no
-    var last_win = 0; // initialize variable that contains the win of the previous round
+    let round = 0;
+    let start_size = 150; // start value of widht & height of the image; must correspond to the value that is specified for the #ballon id in style.css
+    let increase = 2; // number of pixels by which balloon is increased each pump
+    let size; // start_size incremented by 'increase'
+    let pumps; 
+    let total = 0; // money that has been earned in total
+    let rounds_played = 10;
+    let explode_array =  Array.from({length: 10}, () => generateRandomInteger(100))
+    //let explode_array =  [31, 80,  63, 103, 20,  26, 100,  75, 109,  72];
+    let maximal_pumps = 100;
+    let pumpmeup; // number pumps in a given round; is updated each round
+    let number_pumps = []; // arrays for saving number of pumps
+    let exploded = []; // array for saving whether ballon has exploded
+    let explosion; // will an explosion occur? 1 = yes, 0 = no
+    let last_win = 0; // initialize variable that contains the win of the previous round
     
     // initialize language
-    var label_press = 'Inflar globo';
-    var label_collect = '$$$ recolectar';
-    var label_balance = 'Balance total:';
-    var label_last = 'Ganó la última ronda:';
-    var label_currency = ' pesos';
-    var label_header = 'Ronda ';
-    var label_gonext1 = 'Empezar la siguiente ronda';
-    var label_gonext2 = 'Salir del juego';
-    var msg_explosion1 = '<p>El globo estalló después del ';
-    var msg_explosion2 = '. La bomba estalló una vez. <p>No ganaste nada de dinero esta ronda.</p>';
+    let label_press = 'Inflar globo';
+    let label_collect = '$$$ recolectar';
+    let label_balance = 'Balance total:';
+    let label_last = 'Ganó la última ronda:';
+    let label_currency = ' pesos';
+    let label_header = 'Ronda ';
+    let label_gonext1 = 'Empezar la siguiente ronda';
+    let label_gonext2 = 'Salir del juego';
+    let msg_explosion1 = '<p>El globo estalló después del ';
+    let msg_explosion2 = '. La bomba estalló una vez. <p>No ganaste nada de dinero esta ronda.</p>';
     
-    var msg_collect1 = '<p>¡El globo no reventó!</p><p> Ganaste en esta ronda ';
-    var msg_collect2 = ' Pesos.</p><p> El dinero ganado está asegurado.</p>';
+    let msg_collect1 = '<p>¡El globo no reventó!</p><p> Ganaste en esta ronda ';
+    let msg_collect2 = ' Pesos.</p><p> El dinero ganado está asegurado.</p>';
     
-    var msg_end1 = '<p>Esto completa el estudio.';
-    var msg_end2 = ' pesos es el beneficio obtenido </p><p> Haga click en <i>más</i>, para continuar con el estudio.</p>';
+    let msg_end1 = '<p>Esto completa el estudio.';
+    let msg_end2 = ' pesos es el beneficio obtenido </p><p> Haga click en <i>descargar</i>, para bajar los resultados.</p>';
     
-    var err_msg = 'Solo puedes cobrar dinero una vez que hayas inflado el globo al menos una vez. Para hacer esto, presione el botón "Inflar globo".';
+    let err_msg = 'Solo puedes cobrar dinero una vez que hayas inflado el globo al menos una vez. Para hacer esto, presione el botón "Inflar globo".';
   
   
     // initialize labels
@@ -52,9 +56,7 @@ $(document).ready(function() {
     // below: create functions that define game functionality
     
     // what happens when a new round starts
-    var new_round = function() {
-        console.log(number_pumps);
-        console.log(exploded);
+    let new_round = function() {
         $('#gonext').hide();
         $('#message').hide();  
         $('#collect').show();
@@ -69,7 +71,7 @@ $(document).ready(function() {
     };
   
     // what happens when the game ends
-    var end_game = function() {
+    let end_game = function() {
         $('#total').remove();
         $('#collect').remove();
         $('#ballon').remove();
@@ -84,28 +86,28 @@ $(document).ready(function() {
     
     // Important: this function will have to be replaced to ensure that
     // the data is actually sent to _your_ server: 
-    var store_data = function() {
+    let store_data = function() {
         $('#saveThis1').html('<input type='+saveThis+' name ="v_177" value="'+number_pumps+'" />');
         $('#saveThis2').html('<input type='+saveThis+' name ="v_178" value="'+exploded+'" />');
         $('#saveThis3').html('<input type='+saveThis+' name ="v_577" value="'+total+'" />');
     };
     
     // message shown if balloon explodes
-    var explosion_message = function() {
+    let explosion_message = function() {
         $('#collect').hide();
         $('#press').hide();
         $('#message').html(msg_explosion1+pumpmeup+msg_explosion2).show();
     };
     
     // message shown if balloon does not explode
-    var collected_message = function() {
+    let collected_message = function() {
         $('#collect').hide();
         $('#press').hide();    
         $('#message').html(msg_collect1+pumpmeup+msg_collect2).show();
     };  
     
     // animate explosion using jQuery UI explosion
-    var balloon_explode = function() {
+    let balloon_explode = function() {
         $('#ballon').hide( "explode", {pieces: 48}, 1000 );
 
         // activate this if you have a sound file to play a sound
@@ -115,7 +117,7 @@ $(document).ready(function() {
     };  
     
     // show button that starts next round
-    var gonext_message = function() {
+    let gonext_message = function() {
         $('#ballon').hide();
         if (round < rounds_played) {
             $('#gonext').html(label_gonext1).show();
@@ -125,20 +127,20 @@ $(document).ready(function() {
     };
     
     // add money to bank
-    var increase_value = function() {
+    let increase_value = function() {
         $('#total_value').html(total+label_currency);
     };
     
-    var show_last = function() {
+    let show_last = function() {
         $('#last_value').html(last_win+label_currency);
     };
     
     // button functionalities
     
     // pump button functionality
-    $('#press').click(function() {
+    $('#press').click(() => {
         if (pumps >= 0 && pumps < maximal_pumps) { // interacts with the collect function, which sets pumps to -1, making the button temporarily unclickable
-            explosion = 0; // is set to one if pumping goes beyond explosion point; see below
+            explosion = false; // is set to one if pumping goes beyond explosion point; see below
             pumps += 1;
             if (pumps < explode_array[round-1]) {
 	        size +=increase;
@@ -148,7 +150,7 @@ $(document).ready(function() {
 	        last_win = 0;
 	        pumpmeup = pumps;
 	        pumps = -1; // makes pumping button unclickable until new round starts
-	        explosion = 1; // save that balloon has exploded this round
+	        explosion = true; // save that balloon has exploded this round
 	        balloon_explode();
 	        exploded.push(explosion); // save whether balloon has exploded or not
 	        number_pumps.push(pumpmeup); // save number of pumps
@@ -161,7 +163,7 @@ $(document).ready(function() {
   
   
     // collect button: release pressure and hope for money
-    $('#collect').click(function() {
+    $('#collect').click(() => {
         if (pumps === 0) {
 	    alert(err_msg);
         } else if (pumps > 0) { // only works after at least one pump has been made
@@ -184,7 +186,7 @@ $(document).ready(function() {
     });
     
     // click this button to start the next round (or end game when all rounds are played)
-    $('#gonext').click(function() {
+    $('#gonext').click(() => {
         if (round < rounds_played) {
             new_round();
         } else {
@@ -195,7 +197,8 @@ $(document).ready(function() {
     // continue button is shown when the game has ended. This needs to be replaced
     // by a function that takes into account on which platform the BART runs (i.e.
     // how will the page be submitted?)
-    $("#goOn").click(function() {
+    $("#goOn").click(() => {
+
         $("form[name=f1]").submit();
     });
     

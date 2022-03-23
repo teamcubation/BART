@@ -16,7 +16,6 @@ $(document).ready(function() {
     let total = 0; // money that has been earned in total
     let rounds_played = 10;
     let explode_array =  Array.from({length: 10}, () => generateRandomInteger(100))
-    //let explode_array =  [31, 80,  63, 103, 20,  26, 100,  75, 109,  72];
     let maximal_pumps = 100;
     let pumpmeup; // number pumps in a given round; is updated each round
     let number_pumps = []; // arrays for saving number of pumps
@@ -79,17 +78,26 @@ $(document).ready(function() {
         $('#gonext').remove();
         $('#round').remove();
         $('#last_round').remove();
+        $('#person_email').show();
         $('#goOn').show();
         $('#message').html(msg_end1+total+msg_end2).show();
-        store_data(); // note: this function needs to be defined properly
+        // store_data(); // note: this function needs to be defined properly
+
+        let email = $('#personEmail').val();
+        let resultados = {email, data: {numberPumps: number_pumps, exploded, total}};
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(resultados));
+        $('#goOn').attr("href",     dataStr     );
+        $('#goOn').attr("download", `${email}_resultados.json`);
+
     };
     
     // Important: this function will have to be replaced to ensure that
     // the data is actually sent to _your_ server: 
     let store_data = function() {
-        $('#saveThis1').html('<input type='+saveThis+' name ="v_177" value="'+number_pumps+'" />');
-        $('#saveThis2').html('<input type='+saveThis+' name ="v_178" value="'+exploded+'" />');
-        $('#saveThis3').html('<input type='+saveThis+' name ="v_577" value="'+total+'" />');
+        
+        $('#numberPumps').html('<input type='+saveThis+' name ="v_177" value="'+number_pumps+'" />');
+        $('#expoded').html('<input type='+saveThis+' name ="v_178" value="'+exploded+'" />');
+        $('#total').html('<input type='+saveThis+' name ="v_577" value="'+total+'" />');
     };
     
     // message shown if balloon explodes
@@ -197,10 +205,9 @@ $(document).ready(function() {
     // continue button is shown when the game has ended. This needs to be replaced
     // by a function that takes into account on which platform the BART runs (i.e.
     // how will the page be submitted?)
-    $("#goOn").click(() => {
-
-        $("form[name=f1]").submit();
-    });
+    // $("#goOn").click(() => {
+    //     $("form[name=f1]").submit();
+    // });
     
     // start the game!
     new_round();

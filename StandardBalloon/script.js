@@ -81,23 +81,18 @@ $(document).ready(function() {
         $('#person_email').show();
         $('#goOn').show();
         $('#message').html(msg_end1+total+msg_end2).show();
-        // store_data(); // note: this function needs to be defined properly
-
-        let email = $('#personEmail').val();
-        let resultados = {email, data: {numberPumps: number_pumps, exploded, total}};
-        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(resultados));
-        $('#goOn').attr("href",     dataStr     );
-        $('#goOn').attr("download", `${email}_resultados.json`);
+        store_data();
 
     };
     
     // Important: this function will have to be replaced to ensure that
     // the data is actually sent to _your_ server: 
     let store_data = function() {
-        
-        $('#numberPumps').html('<input type='+saveThis+' name ="v_177" value="'+number_pumps+'" />');
-        $('#expoded').html('<input type='+saveThis+' name ="v_178" value="'+exploded+'" />');
-        $('#total').html('<input type='+saveThis+' name ="v_577" value="'+total+'" />');
+        let email = $('#personEmail').val();
+        let results = {email, data: {numberPumps: number_pumps, exploded, total}};
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(results));
+        $('#goOn').attr("href",     dataStr     );
+        $('#goOn').attr("download", `${email}_results.json`);
     };
     
     // message shown if balloon explodes

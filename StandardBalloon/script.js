@@ -92,7 +92,7 @@ $(document).ready(function() {
         let results = {email, data: {numberPumps: number_pumps, exploded, total}};
         var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(results));
         $('#goOn').attr("href",     dataStr     );
-        $('#goOn').attr("download", `${email}_results.json`);
+        $('#goOn').attr("download", `${email.split('@')[0]}_results.json`);
     };
     
     // message shown if balloon explodes

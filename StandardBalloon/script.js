@@ -14,9 +14,9 @@ $(document).ready(function() {
     let size; // start_size incremented by 'increase'
     let pumps; 
     let total = 0; // money that has been earned in total
-    let rounds_played = 10;
-    let explode_array =  Array.from({length: 10}, () => generateRandomInteger(100))
-    let maximal_pumps = 100;
+    let rounds_played = 30;
+    let explode_array =  Array.from({length: 30}, () => generateRandomInteger(128))
+    let maximal_pumps = 128;
     let pumpmeup; // number pumps in a given round; is updated each round
     let number_pumps = []; // arrays for saving number of pumps
     let exploded = []; // array for saving whether ballon has exploded

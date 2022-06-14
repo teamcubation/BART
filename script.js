@@ -3,7 +3,16 @@ let generateRandomInteger = function(max) {
     return Math.floor(Math.random() * max) + 1;
 }
 
+function askForEmail() {
+    let user_email = prompt("Por favor ingresá tu correo laboral", "example@mail.com");
+    if (user_email == null || user_email == "")
+        askForEmail();    
+    else
+        $('#personEmail').val(user_email);
+}
+
 $(document).ready(function() { 
+    askForEmail();
 
     let saveThis = 'hidden'; // text fields that saves data should not be shown; can be shown in testing
   
@@ -24,8 +33,8 @@ $(document).ready(function() {
     let last_win = 0; // initialize variable that contains the win of the previous round
     
     // initialize language
-    let label_press = 'Inflar globo';
-    let label_collect = '$$$ recolectar';
+    let label_press = 'Inflar globo (barra espaciadora)';
+    let label_collect = '$$$ recolectar (enter)';
     let label_balance = 'Balance total:';
     let label_last = 'Ganó la última ronda:';
     let label_currency = ' pesos';
@@ -141,6 +150,15 @@ $(document).ready(function() {
     // button functionalities
     
     // pump button functionality
+    document.body.onkeyup = function(e) {
+        if (e.code == "Space") {
+            $('#press').trigger('click');
+        }
+        if (e.code == "Enter") {
+            $('#collect').trigger('click');
+        }
+    }
+
     $('#press').click(() => {
         if (pumps >= 0 && pumps < maximal_pumps) { // interacts with the collect function, which sets pumps to -1, making the button temporarily unclickable
             explosion = false; // is set to one if pumping goes beyond explosion point; see below
